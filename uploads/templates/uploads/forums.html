@@ -1,0 +1,32 @@
+{% extends "uploads/base.html" %}
+{% load static %}
+{% block style_base %}
+  <link rel="stylesheet" type="text/css" href="{% static 'uploads/css/forums.css' %}">
+{% endblock %}
+
+{% block content%}
+	<div class="header" id="myHeader">
+  <h1>Forum Page</h1>
+</div>
+	
+<div class="container">
+<div class="card"><div>
+  <div class="card-body">
+    <h4 class="card-title">Questions here!</h4>
+    <p>Welcome!Clear your doubts regarding medical issues.</p>
+    <p class="card-text">
+    	<textarea placeholder=" Ask your question" class="textinput" style="overflow: hidden; height: 30px;width: 200px"></textarea>
+    </p>
+    <a href="#" class="card-link">Answers here!</a>
+</div>
+  </div>
+</div>
+<div class="footer text-right"><a href="#">Recent activity</a></div>
+<div class="container">
+	<div class="card"><div>
+	<div class="card-body">
+		<h4 class="card-title">Your question previously asked!</h4>
+		<p>Answers given by the doctor.</p>
+	</div>
+</div>
+{% endblock %}
