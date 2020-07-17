@@ -1,14 +1,26 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .forms import PostForm
-from .forms import PostForm2
-from .models import  Upload_prescription
-from .models import  Upload_reports
+from django.conf import settings
+from .forms import *
+from .models import  *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.core.mail import send_mail
 import datetime
 @login_required
 def home(request):
+    if request.method == 'POST':
+        form = Form(request.POST)
+        if form.is_valid():
+            save_it = form.save(commit = False)
+            save_it.save()
+            subject = 'Your Query has been Received'
+            message = '''Your Query has been sent to our Team.
+                        We will be in touch soon'''
+            from_email = settings.EMAIL_HOST_USER
+            to_list = [save_it.email, settings.EMAIL_HOST_USER]
+            send_mail(subject, message, from_email,
+                      to_list, fail_silently=True)
     return render(request, 'uploads/homepage.html',{'title':'Home'})
 @login_required
 def forum(request):
@@ -58,8 +70,9 @@ def edit_prescription(request, pk):
 @login_required
 def edit_report(request, pk):
     post = Upload_reports.objects.get(id=pk)
-    details = PostForm2(request.POST, request.FILES)
+    details = PostForm2(request.POST, request.FILES, instance = post)
     details.instance.author = request.user
+
     if request.method == 'POST':
         if details.is_valid():
             post1 = details.save(commit=False)

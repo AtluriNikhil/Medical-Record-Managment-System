@@ -33,3 +33,11 @@ class Upload_reports(models.Model):
     def delete(self, *args, **kwargs):
         self.report_file.delete()
         super().delete(*args, **kwargs)
+
+
+class Queries(models.Model):
+    first = models.CharField(max_length=50, blank=False, null=False)
+    last = models.CharField(max_length=50, blank=False, null=False)
+    email = models.EmailField(max_length=50)
+    mobile = models.IntegerField()
+    message = models.CharField(max_length=5000)
