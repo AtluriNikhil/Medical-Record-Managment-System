@@ -1,7 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 
-from uploads.models import Upload_prescription,Upload_reports,Queries 
+from uploads.models import *
 
 class PostForm(ModelForm):
     class Meta:

@@ -41,3 +41,4 @@ class Queries(models.Model):
     email = models.EmailField(max_length=50)
     mobile = models.IntegerField()
     message = models.CharField(max_length=5000)
+

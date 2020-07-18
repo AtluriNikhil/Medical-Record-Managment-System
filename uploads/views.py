@@ -5,22 +5,38 @@ from .forms import *
 from .models import  *
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.core.mail import send_mail
-import datetime
+from django.core.mail import send_mail, send_mass_mail
+import datetime,schedule
 @login_required
 def home(request):
     if request.method == 'POST':
+        firstname = request.POST['first']
+        lastname = request.POST['last']
+        e = request.POST['email']
+        mobile = request.POST['mobile']
+        m = request.POST['message']
         form = Form(request.POST)
         if form.is_valid():
             save_it = form.save(commit = False)
             save_it.save()
-            subject = 'Your Query has been Received'
-            message = '''Your Query has been sent to our Team.
-                        We will be in touch soon'''
-            from_email = settings.EMAIL_HOST_USER
-            to_list = [save_it.email, settings.EMAIL_HOST_USER]
-            send_mail(subject, message, from_email,
-                      to_list, fail_silently=True)
+
+            subject1 = 'Your Query has been Received'
+            message1 = '''Your Query has been sent to our Team.
+            We will be in touch soon'''
+            from_email1 = settings.EMAIL_HOST_USER
+            to_list1 = [save_it.email]
+
+            subject2 = 'New Query has been Received'
+            message2 = 'name : ' + firstname + ' ' + \
+                lastname + '\n' + 'mobile: ' + mobile + '\n' + \
+                'email: ' + e + '\n' + 'message: ' + m
+
+            from_email2 = settings.EMAIL_HOST_USER
+            to_list2 = ['nikhil.a18@iiits.in','nithish.k18@iiits.in']
+
+            m1 = (subject1, message1, from_email1,to_list1)
+            m2 = (subject2, message2, from_email2, to_list2)
+            send_mass_mail((m1, m2), fail_silently=False)
     return render(request, 'uploads/homepage.html',{'title':'Home'})
 @login_required
 def forum(request):
@@ -101,8 +117,41 @@ def delete_report(request, pk):
         file = Upload_reports.objects.get(id=pk)
         file.delete()
     return redirect('searchreport')
+
+
+dictonary_to_send_email = dict()
+def sendmail():
+    d = datetime.date.today()
+    d = str(d)
+    if dictonary_to_send_email.get(d):
+        email_list = dictonary_to_send_email[d]
+        subject = 'Reminder To go to Hospital'
+        message = '''You have set a Reminder to go to hospital Today'''
+        from_email = settings.EMAIL_HOST_USER
+        to_list = dictonary_to_send_email[d]
+        send_mail(
+            Subject,
+            message,
+            from_email,
+            to_list,
+            fail_silently=True,
+        )
+
+
 @login_required
 def searchprescription(request):
+    if request.method == 'POST':
+        y = request.POST['date'][:4]
+        m = request.POST['date'][5:7]
+        d = request.POST['date'][8:]
+        date_to_send_mail = y + '-' + d + '-' + m
+        mail = request.POST['email']
+        if dictonary_to_send_email.get(date_to_send_mail):
+            dictonary_to_send_email[date_to_send_mail].append[mail]
+        else:
+            dictonary_to_send_email[date_to_send_mail] = []
+            dictonary_to_send_email[date_to_send_mail].append[mail]
+        schedule.every().day.at("06:00").do(sendmail)
     prescription= Upload_prescription.objects.filter(author = request.user)
     hospital_name_query = request.GET.get('hospital_name')
     disease_name_query = request.GET.get('disease_name')
