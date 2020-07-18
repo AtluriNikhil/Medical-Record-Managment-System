@@ -7,6 +7,14 @@
 {% endblock %}
 	
 {% block content %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible" role="alert">
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	{{ message }}
+</div>
+{% endfor %}
 <div style="font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";">
 	<div id="carouselExampleCaptions" class="carousel slide carousel-fade" data-ride="carousel" style="margin-bottom: 30px;" >
 	  <ol class="carousel-indicators">
@@ -98,8 +106,8 @@
 		      <input type="email" class="form-control" id="inputEmail4" placeholder="abc@gmail.com" name="email" required >
 		    </div>
 		    <div class="form-group col-md-6">
-		      <label for="homemobile">mobile</label>
-		      <input type="number" class="form-control" id="homemobile" placeholder="+91 9999999999" name="mobile">
+		      <label for="homemobile">Mobile</label>
+		      <input type="number" class="form-control" id="homemobile" placeholder="+91 **********" name="mobile">
 		    </div>
 		  </div>
 		  <div class="mb-3">

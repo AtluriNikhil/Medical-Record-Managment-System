@@ -27,9 +27,9 @@ def home(request):
             to_list1 = [save_it.email]
 
             subject2 = 'New Query has been Received'
-            message2 = 'name : ' + firstname + ' ' + \
-                lastname + '\n' + 'mobile: ' + mobile + '\n' + \
-                'email: ' + e + '\n' + 'message: ' + m
+            message2 = 'Name : ' + firstname + ' ' + \
+                lastname + '\n' + 'Mobile : ' + mobile + '\n' + \
+                'Email : ' + e + '\n' + 'Message : \n' + m
 
             from_email2 = settings.EMAIL_HOST_USER
             to_list2 = ['nikhil.a18@iiits.in','nithish.k18@iiits.in']
@@ -37,6 +37,8 @@ def home(request):
             m1 = (subject1, message1, from_email1,to_list1)
             m2 = (subject2, message2, from_email2, to_list2)
             send_mass_mail((m1, m2), fail_silently=False)
+            messages.success(request, "Your Query has been successfully submitted..!!")
+            return redirect('home')
     return render(request, 'uploads/homepage.html',{'title':'Home'})
 @login_required
 def forum(request):
@@ -120,7 +122,7 @@ def delete_report(request, pk):
 
 
 dictonary_to_send_email = dict()
-def sendmail():
+def sendmail1():
     d = datetime.date.today()
     d = str(d)
     if dictonary_to_send_email.get(d):
@@ -145,13 +147,16 @@ def searchprescription(request):
         m = request.POST['date'][5:7]
         d = request.POST['date'][8:]
         date_to_send_mail = y + '-' + d + '-' + m
-        mail = request.POST['email']
+        email = request.POST['email']
         if dictonary_to_send_email.get(date_to_send_mail):
-            dictonary_to_send_email[date_to_send_mail].append[mail]
+            dictonary_to_send_email[date_to_send_mail].append(email)
         else:
             dictonary_to_send_email[date_to_send_mail] = []
-            dictonary_to_send_email[date_to_send_mail].append[mail]
-        schedule.every().day.at("06:00").do(sendmail)
+            dictonary_to_send_email[date_to_send_mail].append(email)
+        schedule.every().day.at("06:00").do(sendmail1)
+        messages.info(
+            request, "Reminder has been set to " + date_to_send_mail + ". You will get an reminder on " + date_to_send_mail + " to this mail "+email)
+        return(redirect('searchprescription'))
     prescription= Upload_prescription.objects.filter(author = request.user)
     hospital_name_query = request.GET.get('hospital_name')
     disease_name_query = request.GET.get('disease_name')
@@ -174,8 +179,42 @@ def searchprescription(request):
         }
     return render(request,'uploads/prescriptionsearch.html',context)
 
+
+dict_to_send_email = dict()
+def sendmail2():
+    d = datetime.date.today()
+    d = str(d)
+    if dictonary_to_send_email.get(d):
+        email_list = dictonary_to_send_email[d]
+        subject = 'Reminder To go to Hospital'
+        message = '''You have set a Reminder to go to hospital Today'''
+        from_email = settings.EMAIL_HOST_USER
+        to_list = dictonary_to_send_email[d]
+        send_mail(
+            Subject,
+            message,
+            from_email,
+            to_list,
+            fail_silently=True,
+        )
+
 @login_required
 def searchreport(request):
+    if request.method == 'POST':
+        y = request.POST['date'][:4]
+        m = request.POST['date'][5:7]
+        d = request.POST['date'][8:]
+        date_to_send_mail = y + '-' + d + '-' + m
+        email = request.POST['email']
+        if dict_to_send_email.get(date_to_send_mail):
+            dict_to_send_email[date_to_send_mail].append(email)
+        else:
+            dict_to_send_email[date_to_send_mail] = []
+            dict_to_send_email[date_to_send_mail].append(email)
+        schedule.every().day.at("06:00").do(sendmail2)
+        messages.info(
+            request, "Reminder has been set to " + date_to_send_mail + ". You will get an reminder on " + date_to_send_mail + " to this mail "+email)
+        return(redirect('searchreport'))
     report= Upload_reports.objects.filter(author = request.user)
     diagnostics_name_query = request.GET.get('diagnostics_name')
     report_type_query = request.GET.get('report_type')

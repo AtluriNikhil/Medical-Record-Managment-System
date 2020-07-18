@@ -5,6 +5,14 @@
 {% endblock %}
 
 {% block content %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        {{ message }}
+    </div>
+    {% endfor %}
     <div class="container" >
         <div class="rounded-pill" style="padding-top: 1em;margin-top: 1em; margin-bottom: 5em; padding-right: 6em; padding-left: 6em; background-color: #f5f8ff;">
         <h3>Filter Journals</h3>
@@ -96,6 +104,32 @@
         
     </tbody>
 </table>
+
+<p>
+    <button class="btn btn-info" type="button" data-toggle="collapse" data-target="#collapseExample"
+        aria-expanded="false" aria-controls="collapseExample" data-toggle="tooltip" data-placement="top"
+        title="Get notified when to go to Diagnostic centre again">
+        Set Reminder
+    </button>
+</p>
+<div class="collapse" id="collapseExample">
+    <div class="card card-body">
+        <form method="POST">
+            {% csrf_token %}
+            <h4>When to go to diagnostic centre again?</h4>
+            <label><b>Date</b></label>
+            <input type="date" id="date" name="date" required>
+            <br>
+            <br>
+            <label><b>Mail you want to be notified</b></label>
+            <input type="email" id="email" name="email" required placeholder="Enter your mail to get notifications">
+            <br>
+            <br>
+            <br>
+            <button type="submit" class="btn btn-primary">Add Reminder</button>
+        </form>
+    </div>
+</div>
     </div>
 
 
