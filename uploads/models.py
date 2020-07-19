@@ -17,6 +17,9 @@ class Upload_prescription(models.Model):
     def delete(self, *args, **kwargs):
         self.prescription_file.delete()
         super().delete(*args, **kwargs)
+
+    def delete_not_file(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
     
 #model for reports
 class Upload_reports(models.Model):
@@ -27,13 +30,15 @@ class Upload_reports(models.Model):
     report_file = models.FileField(upload_to='files/reports',default="Some File")
 
     def __str__(self):
-        return self.hospital_name
+        return self.diagnostics_name
 
 
     def delete(self, *args, **kwargs):
         self.report_file.delete()
         super().delete(*args, **kwargs)
 
+    def delete_not_file(self, *args, **kwargs):
+        super().delete(*args, **kwargs)
 
 class Queries(models.Model):
     first = models.CharField(max_length=50, blank=False, null=False)

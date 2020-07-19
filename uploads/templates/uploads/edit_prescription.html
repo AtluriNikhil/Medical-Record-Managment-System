@@ -35,12 +35,14 @@
 							</div>
 							<p>Date</p>
 							<div class="input">
-								<input name="date" type="date" class="form-control" id="date" value="{{post.date}}" required>
+								<input name="date" type="date" class="form-control" id="date" value="{{date}}" required>
 							</div>
-							<p>Choose Your Prescription</p>
+							<p>Choose Your Prescription : 
+							<a href="{{post.prescription_file.url}}" target="_blank">Present File</a></p>
+
 							<div class="input">
 								<input name="prescription_file" type="file" class="form-control-file"
-									id="FormControlFile1" value="{{post.prescription_file}}" required>
+									id="FormControlFile1">
 							</div>
 							<button type="submit" class="btn submit">Save</button>
 						</form>

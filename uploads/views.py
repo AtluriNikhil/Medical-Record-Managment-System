@@ -50,6 +50,7 @@ def remainder(request):
 def uploads(request):
     if request.method == 'POST':
         print(request.POST)
+        print(request.FILES)
         details = PostForm(request.POST,request.FILES)
         details2 = PostForm2(request.POST,request.FILES)
         details.instance.author = request.user
@@ -73,34 +74,48 @@ def uploads(request):
 @login_required
 def edit_prescription(request, pk):
     post = Upload_prescription.objects.get(id=pk)
-    details = PostForm(request.POST, request.FILES)
-    details.instance.author = request.user
+    date = str(post.date)
     if request.method == 'POST':
+        details = PostForm(request.POST, request.FILES)
+        details.instance.author = request.user
         if details.is_valid():
+            if len(request.FILES) == 0:
+                details.instance.prescription_file = post.prescription_file
             post1 = details.save(commit=False)
             post1.save()
-            post.delete()
+            if len(request.FILES) == 0:
+                post.delete_not_file()
+            else:
+                print('ok3')
+                post.delete()
             messages.success(request, "Data for Prescription Submitted Edited..!!")
         return redirect('searchprescription')
 
-    return render(request, 'uploads/edit_prescription.html', {'post': post})
+    return render(request, 'uploads/edit_prescription.html', {'post': post ,'date': date})
 
 @login_required
 def edit_report(request, pk):
     post = Upload_reports.objects.get(id=pk)
-    details = PostForm2(request.POST, request.FILES, instance = post)
-    details.instance.author = request.user
-
+    date = str(post.date)
+    print(post.report_file.url)
     if request.method == 'POST':
+        details = PostForm2(request.POST, request.FILES)
+        details.instance.author = request.user
         if details.is_valid():
+            if len(request.FILES) == 0:
+                details.instance.report_file = post.report_file
             post1 = details.save(commit=False)
             post1.save()
-            post.delete()
+            if len(request.FILES) == 0:
+                post.delete_not_file()
+            else:
+                print('ok3')
+                post.delete()
             messages.success(
-                request, "Data for Prescription Submitted Edited..!!")
+                request, "Data for Report Submitted Edited..!!")
         return redirect('searchreport')
 
-    return render(request, 'uploads/edit_report.html', {'post': post})
+    return render(request, 'uploads/edit_report.html', {'post': post, 'date': date})
 
 @login_required
 def temporary_files(request):
