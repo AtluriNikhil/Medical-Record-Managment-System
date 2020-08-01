@@ -3,17 +3,15 @@ body {
     background-attachment: fixed;
     background-size: cover;
     background-repeat: no-repeat;
-  }
+}
 
 .container{
-
-  background-color: #e9efebf0
-  ; 
-
-border-width: 1px;
-font-style: oblique;
-padding: 3px;
+  background-color: #e9efebf0; 
+  border-width: 1px;
+  font-style: oblique;
+  padding: 3px;
 }
+
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
 

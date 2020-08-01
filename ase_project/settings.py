@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-
 import os
 from django.contrib.messages import constants as messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -35,6 +34,8 @@ INSTALLED_APPS = [
     'uploads.apps.UploadsConfig',
     'LandingPage.apps.LandingpageConfig',
     'userinfo.apps.UserinfoConfig',
+    'forum.apps.ForumConfig',
+    'notifications.apps.NotificationsConfig',
     'crispy_forms',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -126,7 +127,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static_root')
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-MEDIA_URL = '/files/media/'
+MEDIA_URL = '/media/'
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -142,7 +143,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'santoshvenkata370@gmail.com'
-EMAIL_HOST_PASSWORD = 'santu@1506' 
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = 'Simple@123' 
 
 

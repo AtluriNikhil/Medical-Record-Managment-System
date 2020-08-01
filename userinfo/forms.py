@@ -23,3 +23,16 @@ class UserProfileInfoForm(forms.ModelForm):
     class Meta:
         model = UserProfileInfo
         fields = ('gender','dob','Bloodgroup','phoneno','profile_pic')
+
+class UserUpdateForm(forms.ModelForm):
+    email = forms.EmailField()
+
+    class Meta:
+        model = User
+        fields = ['username','email']
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = UserProfileInfo
+        fields = ['profile_pic','gender','phoneno','Bloodgroup','dob']

@@ -40,7 +40,7 @@
               <a class="nav-link " href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="{% url 'remainder' %}">Tablet Notifications</a>
+              <a class="nav-link" href="{% url 'blog-notifications' %}">Tablet Notifications</a>
             </li>
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -68,7 +68,7 @@
                 Profile
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="#" style="border-bottom: 0.05px solid black;border-width: thin;">View Profile</a>
+                <a class="dropdown-item" href="{% url 'profile' %}" style="border-bottom: 0.05px solid black;border-width: thin;">View Profile</a>
                 <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
               </div>
             </li>

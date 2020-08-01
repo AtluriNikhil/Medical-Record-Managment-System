@@ -26,6 +26,8 @@ urlpatterns = [
     path('',include('uploads.urls')),
     path('',include('LandingPage.urls')),
     path('',include('userinfo.urls')),
+    path('',include('forum.urls')),
+    path('',include('notifications.urls')),
     path('password-reset/',
          auth_views.PasswordResetView.as_view(
              template_name='userinfo/password_reset.html'

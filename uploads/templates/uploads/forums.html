@@ -5,28 +5,53 @@
 {% endblock %}
 
 {% block content%}
-	<div class="header" id="myHeader">
-  <h1>Forum Page</h1>
-</div>
+<style>
+div.a {
+  text-align: justify; 
+  -moz-text-align-last: right; 
+  text-align-last: left;
+}
+
+div.b {
+  text-align: justify; 
+  -moz-text-align-last: text-right; 
+  text-align-last: left;
+}
+
+div.c {
+  text-align: justify; 
+  -moz-text-align-last: right; 
+  text-align-last: left;
+}
+</style>
 	
 <div class="container">
 <div class="card"><div>
   <div class="card-body">
-    <h4 class="card-title">Questions here!</h4>
-    <p>Welcome!Clear your doubts regarding medical issues.</p>
-    <p class="card-text">
-    	<textarea placeholder=" Ask your question" class="textinput" style="overflow: hidden; height: 30px;width: 200px"></textarea>
-    </p>
-    <a href="#" class="card-link">Answers here!</a>
+    <h6 class="card-title" style="text-align: left;">
+     Medicare is always looking to make things easier for you. Our aim is to provide our customers with the best doctors, constant care, and reliable support to clarify all your queries regarding any type of medical issues.Do you  have any question ? please click the link below.</h6>
+    <button type="submit" class="btn btn-outline-info"><a href="{% url 'post-create' %}">Ask Your Question</a></button>
+    <h6 style="text-align: left;">Click here to view the answers given by the doctors for the given medical issue.</h6>
+    <button type="submit" class="btn btn-outline-success"><a href="{%url 'blog-home' %}">Answers here</a></button>
 </div>
   </div>
 </div>
 <div class="footer text-right"><a href="#">Recent activity</a></div>
-<div class="container">
-	<div class="card"><div>
-	<div class="card-body">
-		<h4 class="card-title">Your question previously asked!</h4>
-		<p>Answers given by the doctor.</p>
-	</div>
+<div class="alert alert-info corner">
+<h4 style="text-align: left;"><b>How it Works?</b></h4>
+<ul class="footer text-left">
+  <div class="a">
+    <li>Once you post your health issue, it is shared with our doctor panel.</li></div>
+  <div class="b">
+    <li>A doctor will send medical advice to your health issue and reports after assessing it.</li></div>
+    <div class="c">
+    <li>You can follow up with the same doctor.</li></div>
+</ul>
+<div class="a">
+  <p &nbsp;&nbsp;&nbsp>* Many specialized doctors from various specialities evaluate and give personalized online medical advice to patients.</p></div>
+<div class="b"> 
+<p>* There were many specialists in the Medicare give medical advice to thousands of patients online every day.</p></div>
+<div class="c">
+<p>* Ask a Doctor Online now and get your medical questions answered instantly.</p></div>
 </div>
 {% endblock %}
